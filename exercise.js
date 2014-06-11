@@ -169,6 +169,22 @@ function counter(value) {
 	};
 }
 
+// make a revokable function wrapper
+function revocable(func) {
+	var callable = true;
+	return {
+		invoke : function(a) {
+			if (callable) {
+				return func(a);
+			}
+			return undefined;
+		},
+		revoke : function() {
+			callable = false;
+		}
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -258,12 +274,24 @@ var square = twice(mul);
 //log( con() );  // 1
 //log( con() );  // undefined
 
-var object = counter(10),
-	next = object.next,
-	prev = object.prev;
-log ( next() ); // 11
-log ( prev() ); // 10
-log ( prev() ); //  9
-log ( next() ); // 10
+//var object = counter(10),
+//	next = object.next,
+//	prev = object.prev;
+//log ( next() ); // 11
+//log ( prev() ); // 10
+//log ( prev() ); //  9
+//log ( next() ); // 10
 
+//var object = counter2(10),
+//next = object.next,
+//prev = object.prev;
+//log ( next() ); // 11
+//log ( prev() ); // 10
+//log ( prev() ); //  9
+//log ( next() ); // 10
 
+var rev = revocable(identity),
+	invoke = rev.invoke;
+log( invoke(7) ); //7
+rev.revoke();
+log( invoke(8) ); //undefined
