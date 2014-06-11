@@ -1,4 +1,3 @@
-<html><body><pre><script>
 
 // write out arg
 function log(arg) {
@@ -67,10 +66,21 @@ function curry(f, a) {
 
 //var addf = liftf(add);
 //log( addf(3)(4) ); 			// 7
-//log( liftf(mul)(5)(6) ); 	// 30 
+//log( liftf(mul)(5)(6) ); 		// 30 
 
-var add3 = curry(add, 3);
-log( add3(4) ); 		//7
-log( curry(mul,5)(6) ); //30
+//var add3 = curry(add, 3);
+//log( add3(4) ); 				//7
+//log( curry(mul,5)(6) ); 		//30
 
-</script></pre></body></html>
+var inc_1 = curry(add,1);
+var inc_2 = liftf(add)(1);
+var inc_3 = addf(1);
+
+log( inc_1(5) );    	//6
+log( inc_1(inc_1(5)) );   //7
+
+log( inc_2(5) );    	//6
+log( inc_2(inc_2(5)) );   //7
+
+log( inc_3(5) );    	//6
+log( inc_3(inc_3(5)) );   //7
