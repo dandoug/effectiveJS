@@ -187,7 +187,7 @@ function revocable(func) {
 
 // symbol generator
 function gensymf(root) {
-	var r = new String(root),
+	var r = String(root),
 	    i = 0;
 	return function() {
 		i += 1;
@@ -195,14 +195,35 @@ function gensymf(root) {
 	};
 }
 
+// a factory to make a symbol generator
 function gensymff(func, seed) {
 	return function(root) {
 		var i = seed,
-			r = new String(root);
+			r = String(root);
 			return function() {
 				i = func(i);
 				return r + i;
 			};
+	};
+}
+
+// finaonacci sequence generator
+function fibonaccif(a, b) {
+	var x = undefined, 
+	    y = undefined;
+	return function() {
+		if (x === undefined) {
+			x = a;
+			return x;
+		} 
+		if (y == undefined) {
+			y = b;
+			return y;
+		}
+		var value = x + y;
+		x = y;
+		y = value;
+		return value;
 	};
 }
 
@@ -317,11 +338,18 @@ var square = twice(mul);
 //log( geng() ); // "G2"
 //log( genh() ); // "H2"
 
-var gensymf = gensymff(inc, 0),
-	geng = gensymf("G"),
-	genh = gensymf("H");
-log( geng() ); // "G1" 
-log( genh() ); // "H1"
-log( geng() ); // "G2"
-log( genh() ); // "H2"
+//var gensymf = gensymff(inc, 0),
+//	geng = gensymf("G"),
+//	genh = gensymf("H");
+//log( geng() ); // "G1" 
+//log( genh() ); // "H1"
+//log( geng() ); // "G2"
+//log( genh() ); // "H2"
 
+var fib = fibonaccif(0,1);
+log( fib() ); // 0
+log( fib() ); // 1
+log( fib() ); // 1
+log( fib() ); // 2
+log( fib() ); // 3
+log( fib() ); // 5
