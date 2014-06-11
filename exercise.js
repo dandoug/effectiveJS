@@ -1,7 +1,3 @@
-<html> 
-<body><pre>
-<script>
-
 // write out arg
 function log(arg) {
 	document.writeln(arg);
@@ -101,6 +97,3 @@ log( doubl(11) );   	//22
 var square = twice(mul);
 log( square(11) ); 		//121
 
-</script>
-</pre></body> 
-</html>
