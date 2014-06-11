@@ -227,6 +227,19 @@ function fibonaccif(a, b) {
 	};
 }
 
+// make an object that has value and source as a string
+function m(value, source) {
+	return {
+		value: value,
+		source: source || String(value)
+	};
+}
+
+function addm( m1, m2 ) {
+	return m( m1.value + m2.value, "(" + m1.source + "+" + m2.source + ")");
+}
+
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -346,10 +359,17 @@ var square = twice(mul);
 //log( geng() ); // "G2"
 //log( genh() ); // "H2"
 
-var fib = fibonaccif(0,1);
-log( fib() ); // 0
-log( fib() ); // 1
-log( fib() ); // 1
-log( fib() ); // 2
-log( fib() ); // 3
-log( fib() ); // 5
+//var fib = fibonaccif(0,1);
+//log( fib() ); // 0
+//log( fib() ); // 1
+//log( fib() ); // 1
+//log( fib() ); // 2
+//log( fib() ); // 3
+//log( fib() ); // 5
+
+//log( JSON.stringify(m(1)) );
+//log( JSON.stringify(m(Math.PI, "pi")) );
+
+log( JSON.stringify(addm(m(3),m(4))) );
+log( JSON.stringify(addm(m(1), m(Math.PI, "pi"))) );
+
