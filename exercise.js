@@ -110,7 +110,7 @@ function fromTo(from, to) {
 		} else {
 			return undefined;
 		}
-	}
+	};
 }
 
 // generator that uses generator to return elements from an array
