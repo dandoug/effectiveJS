@@ -3,7 +3,11 @@
 
 // write out arg
 function log(arg) {
-	document.writeln(arg);
+	if (typeof(document) != "undefined") {
+		document.writeln(arg);
+	} else {
+		console.log(arg);
+	}
 }
 
 // identity function
@@ -84,6 +88,17 @@ function composeb(f, g) {
 	};
 }
 
+function once(f) {
+	var called = false;
+	return function(a,b) {
+		if (! called) {
+			called = true;
+			return f(a,b);
+		}
+	};
+}
+
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -126,5 +141,8 @@ var square = twice(mul);
 
 //log( composeu(doubl, square)(5) ); // 100
 
-log( composeb(add, mul)(2, 3, 7) ); // 35
+//log( composeb(add, mul)(2, 3, 7) ); // 35
 
+var add_once = once(add);
+log ( add_once(3,4) ); //7
+log ( add_once(3,5) ); //undefined
