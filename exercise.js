@@ -235,8 +235,16 @@ function m(value, source) {
 	};
 }
 
+// build a op that adds m
 function addm( m1, m2 ) {
 	return m( m1.value + m2.value, "(" + m1.source + "+" + m2.source + ")");
+}
+
+// generate functions that journal binary m operations
+function liftm(func, op) {
+	return function(m1, m2) {
+		return m( func(m1.value,m2.value), "(" + m1.source + op + m2.source + ")");
+	};
 }
 
 
@@ -370,6 +378,10 @@ var square = twice(mul);
 //log( JSON.stringify(m(1)) );
 //log( JSON.stringify(m(Math.PI, "pi")) );
 
+//log( JSON.stringify(addm(m(3),m(4))) );
+//log( JSON.stringify(addm(m(1), m(Math.PI, "pi"))) );
+
+var addm = liftm(add, "+");
 log( JSON.stringify(addm(m(3),m(4))) );
-log( JSON.stringify(addm(m(1), m(Math.PI, "pi"))) );
+log( JSON.stringify(liftm(mul,"*")(m(3), m(4))) );
 
