@@ -240,13 +240,36 @@ function addm( m1, m2 ) {
 	return m( m1.value + m2.value, "(" + m1.source + "+" + m2.source + ")");
 }
 
-// generate functions that journal binary m operations
+//// generate functions that journal binary m operations
+//function liftm(func, op) {
+//	return function(m1, m2) {
+//		return m( func(m1.value,m2.value), "(" + m1.source + op + m2.source + ")");
+//	};
+//}
+
+//generate functions that journal binary m operations, wrap number inputs
 function liftm(func, op) {
-	return function(m1, m2) {
+	var mify = function(x) {
+		var mfy = x;
+		if (typeof(x) === 'number') {
+			mfy = m(x);
+		}
+		return mfy;
+	};
+	return function(x1, x2) {
+		var m1 = mify(x1);
+		var m2 = mify(x2);
 		return m( func(m1.value,m2.value), "(" + m1.source + op + m2.source + ")");
 	};
 }
 
+// evaluate an expression that is either an array like [mul, 3, 3] or a number
+function exp(x) {
+	if (Array.isArray(x)) {
+		return x[0](x[1],x[2]);
+	} 
+	return x;
+}
 
 //log(identity(3));
 //log(add(3,4));
@@ -380,8 +403,16 @@ var square = twice(mul);
 
 //log( JSON.stringify(addm(m(3),m(4))) );
 //log( JSON.stringify(addm(m(1), m(Math.PI, "pi"))) );
+//
+//var addm = liftm(add, "+");
+//log( JSON.stringify(addm(m(3),m(4))) );
+//log( JSON.stringify(liftm(mul,"*")(m(3), m(4))) );
 
-var addm = liftm(add, "+");
-log( JSON.stringify(addm(m(3),m(4))) );
-log( JSON.stringify(liftm(mul,"*")(m(3), m(4))) );
+//var addm = liftm(add, "+");
+//log( JSON.stringify(addm(3,4)) );
+//log( JSON.stringify(addm(m(3),m(4))) );
+//log( JSON.stringify(liftm(mul,"*")(m(3), m(4))) );
 
+var sae = [mul, 3, 3];
+log( exp(sae) ); // 9
+log( exp(42) );  // 42
