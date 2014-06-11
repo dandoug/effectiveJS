@@ -123,6 +123,17 @@ function element(arr, ixfn) {
 	};
 }
 
+// take a generator and an array, return function that collects what is generated into the array
+function collect(gen, arr) {
+	return function() {
+		var ele = gen();
+		if (ele !== undefined) {
+			arr.push(ele);
+		}
+		return ele;
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -176,15 +187,22 @@ var square = twice(mul);
 // log( index() );  //1
 // log( index() );  //2
 // log( index() );  //undefined
+//
+//var ele = element(['a', 'b', 'c', 'd'], fromTo(1,3));
+//log( ele() );  //b
+//log( ele() );  //c
+//log( ele() );  //undefined
+//
+//var elf = element(['a', 'b', 'c', 'd']);
+//log( elf() );  //a
+//log( elf() );  //b
+//log( elf() );  //c
+//log( elf() );  //d
+//log( elf() );  //undefined
 
-var ele = element(['a', 'b', 'c', 'd'], fromTo(1,3));
-log( ele() );  //b
-log( ele() );  //c
-log( ele() );  //undefined
-
-var elf = element(['a', 'b', 'c', 'd']);
-log( elf() );  //a
-log( elf() );  //b
-log( elf() );  //c
-log( elf() );  //d
-log( elf() );  //undefined
+var array = [],
+    col = collect(fromTo(5,7), array);
+log( col() ); //5
+log( col() ); //g
+log( col() ); //undefined
+log( array ); // [5,6]
