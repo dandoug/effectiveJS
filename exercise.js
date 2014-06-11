@@ -263,13 +263,25 @@ function liftm(func, op) {
 	};
 }
 
-// evaluate an expression that is either an array like [mul, 3, 3] or a number
+//// evaluate an expression that is either an array like [mul, 3, 3] or a number
+//function exp(x) {
+//	if (Array.isArray(x)) {
+//		return x[0](x[1],x[2]);
+//	} 
+//	return x;
+//}
+
+//evaluate an expression that is either an array like [mul, 3, 3] or a number
 function exp(x) {
 	if (Array.isArray(x)) {
-		return x[0](x[1],x[2]);
+		var a = exp(x[1]);
+		var b = exp(x[2]);
+		return x[0](a,b);
 	} 
 	return x;
 }
+
+
 
 //log(identity(3));
 //log(add(3,4));
@@ -413,6 +425,12 @@ var square = twice(mul);
 //log( JSON.stringify(addm(m(3),m(4))) );
 //log( JSON.stringify(liftm(mul,"*")(m(3), m(4))) );
 
-var sae = [mul, 3, 3];
-log( exp(sae) ); // 9
-log( exp(42) );  // 42
+//var sae = [mul, 3, 3];
+//log( exp(sae) ); // 9
+//log( exp(42) );  // 42
+
+var nae = [
+		Math.sqrt,
+		[add, [square,3], [square,4]]
+];
+log( exp(nae) ); // 5
