@@ -60,6 +60,13 @@ function twice(f) {
 	};
 }
 
+// reverse the args of a binary function
+function reverse(f) {
+	return function(a,b) {
+		return f(b,a);
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -91,9 +98,11 @@ function twice(f) {
 //log( inc_3(5) );    	//6
 //log( inc_3(inc_3(5)) );   //7
 
-log( add(11,11) );  	//22
-var doubl = twice(add);
-log( doubl(11) );   	//22
-var square = twice(mul);
-log( square(11) ); 		//121
+// log( add(11,11) );  	//22
+// var doubl = twice(add);
+// log( doubl(11) );   	//22
+// var square = twice(mul);
+// log( square(11) ); 		//121
 
+var bus = reverse(sub);
+log( bus(3,2) );  // -1
