@@ -88,6 +88,7 @@ function composeb(f, g) {
 	};
 }
 
+// invoke a binary function exactly once
 function once(f) {
 	var called = false;
 	return function(a,b) {
@@ -95,7 +96,22 @@ function once(f) {
 			called = true;
 			return f(a,b);
 		}
+		return undefined;
 	};
+}
+
+// generator that produces values in a range
+function fromTo(a, b) {
+	var i = a;
+	return function() {
+		var answer = i;
+		if (answer < b) {
+			i += 1;
+			return answer;
+		} else {
+			return undefined;
+		}
+	}
 }
 
 
@@ -143,6 +159,12 @@ var square = twice(mul);
 
 //log( composeb(add, mul)(2, 3, 7) ); // 35
 
-var add_once = once(add);
-log ( add_once(3,4) ); //7
-log ( add_once(3,5) ); //undefined
+// var add_once = once(add);
+// log ( add_once(3,4) ); //7
+// log ( add_once(3,5) ); //undefined
+
+var index = fromTo(0, 3);
+log( index() );  //0
+log( index() );  //1
+log( index() );  //2
+log( index() );  //undefined
