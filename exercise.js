@@ -139,10 +139,18 @@ function filter(gen, pred) {
 	return function() {
 		do {
 			var value = gen();
-			if (value === undefined) {
-				break;
-			}
-		} while (!pred(value));
+		} while (value !== undefined && !pred(value));
+		return value;
+	};
+}
+
+// concatenation two generators
+function concat(gena, genb) {
+	return function() {
+		var value = gena();
+		if (value === undefined) {
+			value = genb();
+		}
 		return value;
 	};
 }
@@ -220,11 +228,20 @@ var square = twice(mul);
 //log( col() ); //undefined
 //log( array ); // [5,6]
 
-var fil = filter(fromTo(0,5),
-		function third(value) {
-			return (value % 3) === 0;
-		});
-log( fil() );
-log( fil() );
-log( fil() );
+//var fil = filter(fromTo(0,5),
+//		function third(value) {
+//			return (value % 3) === 0;
+//		});
+//log( fil() );  // 0
+//log( fil() );  // 3
+//log( fil() );  // undefined
+
+var con = concat(fromTo(0,3), fromTo(0,2));
+log( con() );  // 0
+log( con() );  // 1
+log( con() );  // 2
+log( con() );  // 0
+log( con() );  // 1
+log( con() );  // undefined
+
 
