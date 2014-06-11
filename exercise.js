@@ -134,6 +134,19 @@ function collect(gen, arr) {
 	};
 }
 
+// filter a generator
+function filter(gen, pred) {
+	return function() {
+		do {
+			var value = gen();
+			if (value === undefined) {
+				break;
+			}
+		} while (!pred(value));
+		return value;
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -200,9 +213,18 @@ var square = twice(mul);
 //log( elf() );  //d
 //log( elf() );  //undefined
 
-var array = [],
-    col = collect(fromTo(5,7), array);
-log( col() ); //5
-log( col() ); //g
-log( col() ); //undefined
-log( array ); // [5,6]
+//var array = [],
+//    col = collect(fromTo(5,7), array);
+//log( col() ); //5
+//log( col() ); //g
+//log( col() ); //undefined
+//log( array ); // [5,6]
+
+var fil = filter(fromTo(0,5),
+		function third(value) {
+			return (value % 3) === 0;
+		});
+log( fil() );
+log( fil() );
+log( fil() );
+
