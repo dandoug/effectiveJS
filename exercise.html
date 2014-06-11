@@ -1,3 +1,6 @@
+<html> 
+<body><pre>
+<script>
 
 // write out arg
 function log(arg) {
@@ -54,6 +57,13 @@ function curry(f, a) {
 	};
 }
 
+// return a unary function that invokes a binary function with its arg passed twice
+function twice(f) {
+	return function(a) {
+		return f(a,a);
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -72,15 +82,25 @@ function curry(f, a) {
 //log( add3(4) ); 				//7
 //log( curry(mul,5)(6) ); 		//30
 
-var inc_1 = curry(add,1);
-var inc_2 = liftf(add)(1);
-var inc_3 = addf(1);
+//var inc_1 = curry(add,1);
+//var inc_2 = liftf(add)(1);
+//var inc_3 = addf(1);
+ 
+//log( inc_1(5) );    	//6
+//log( inc_1(inc_1(5)) );   //7
+ 
+//log( inc_2(5) );    	//6
+//log( inc_2(inc_2(5)) );   //7
+ 
+//log( inc_3(5) );    	//6
+//log( inc_3(inc_3(5)) );   //7
 
-log( inc_1(5) );    	//6
-log( inc_1(inc_1(5)) );   //7
+log( add(11,11) );  	//22
+var doubl = twice(add);
+log( doubl(11) );   	//22
+var square = twice(mul);
+log( square(11) ); 		//121
 
-log( inc_2(5) );    	//6
-log( inc_2(inc_2(5)) );   //7
-
-log( inc_3(5) );    	//6
-log( inc_3(inc_3(5)) );   //7
+</script>
+</pre></body> 
+</html>
