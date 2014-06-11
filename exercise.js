@@ -185,6 +185,16 @@ function revocable(func) {
 	};
 }
 
+// symbol generator
+function gensymf(root) {
+	var r = new String(root),
+	    i = 0;
+	return function() {
+		i += 1;
+		return r + i;
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -282,9 +292,15 @@ var square = twice(mul);
 //log ( prev() ); //  9
 //log ( next() ); // 10
 
-var rev = revocable(identity),
-	invoke = rev.invoke;
-log( invoke(7) ); //7
-rev.revoke();
-log( invoke(8) ); //undefined
+//var rev = revocable(identity),
+//	invoke = rev.invoke;
+//log( invoke(7) ); //7
+//rev.revoke();
+//log( invoke(8) ); //undefined
 
+var geng = gensymf("G"),
+    genh = gensymf("H");
+log( geng() ); // "G1" 
+log( genh() ); // "H1"
+log( geng() ); // "G2"
+log( genh() ); // "H2"
