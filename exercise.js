@@ -155,6 +155,20 @@ function concat(gena, genb) {
 	};
 }
 
+// construct an object
+function counter(value) {
+	return {
+      next: function() {
+    	value += 1;
+        return value;
+      },
+      prev: function() {
+    	value -= 1;
+        return value;
+      }
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -235,13 +249,21 @@ var square = twice(mul);
 //log( fil() );  // 0
 //log( fil() );  // 3
 //log( fil() );  // undefined
+//
+//var con = concat(fromTo(0,3), fromTo(0,2));
+//log( con() );  // 0
+//log( con() );  // 1
+//log( con() );  // 2
+//log( con() );  // 0
+//log( con() );  // 1
+//log( con() );  // undefined
 
-var con = concat(fromTo(0,3), fromTo(0,2));
-log( con() );  // 0
-log( con() );  // 1
-log( con() );  // 2
-log( con() );  // 0
-log( con() );  // 1
-log( con() );  // undefined
+var object = counter(10),
+	next = object.next,
+	prev = object.prev;
+log ( next() ); // 11
+log ( prev() ); // 10
+log ( prev() ); //  9
+log ( next() ); // 10
 
 
