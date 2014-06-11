@@ -115,7 +115,7 @@ function fromTo(from, to) {
 
 // generator that uses generator to return elements from an array
 function element(arr, ixfn) {
-	if (typeof(ixfn) === 'undefined') {
+	if (ixfn === undefined) {
 		ixfn = fromTo(0, arr.length);
 	}
 	return function() {
