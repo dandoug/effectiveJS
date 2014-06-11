@@ -195,6 +195,17 @@ function gensymf(root) {
 	};
 }
 
+function gensymff(func, seed) {
+	return function(root) {
+		var i = seed,
+			r = new String(root);
+			return function() {
+				i = func(i);
+				return r + i;
+			};
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -213,6 +224,7 @@ function gensymf(root) {
 //log( add3(4) ); 				//7
 //log( curry(mul,5)(6) ); 		//30
 
+var inc = curry(add,1);
 //var inc_1 = curry(add,1);
 //var inc_2 = liftf(add)(1);
 //var inc_3 = addf(1);
@@ -298,9 +310,18 @@ var square = twice(mul);
 //rev.revoke();
 //log( invoke(8) ); //undefined
 
-var geng = gensymf("G"),
-    genh = gensymf("H");
+//var geng = gensymf("G"),
+//    genh = gensymf("H");
+//log( geng() ); // "G1" 
+//log( genh() ); // "H1"
+//log( geng() ); // "G2"
+//log( genh() ); // "H2"
+
+var gensymf = gensymff(inc, 0),
+	geng = gensymf("G"),
+	genh = gensymf("H");
 log( geng() ); // "G1" 
 log( genh() ); // "H1"
 log( geng() ); // "G2"
 log( genh() ); // "H2"
+
