@@ -101,12 +101,11 @@ function once(f) {
 }
 
 // generator that produces values in a range
-function fromTo(a, b) {
-	var i = a;
+function fromTo(from, to) {
 	return function() {
-		var answer = i;
-		if (answer < b) {
-			i += 1;
+		var answer = from;
+		if (answer < to) {
+			from += 1;
 			return answer;
 		} else {
 			return undefined;
@@ -114,6 +113,15 @@ function fromTo(a, b) {
 	}
 }
 
+// generator that uses generator to return elements from an array
+function element(arr, ixfn) {
+	if (typeof(ixfn) === 'undefined') {
+		ixfn = fromTo(0, arr.length);
+	}
+	return function() {
+		return arr[ixfn()];
+	};
+}
 
 //log(identity(3));
 //log(add(3,4));
@@ -163,8 +171,20 @@ var square = twice(mul);
 // log ( add_once(3,4) ); //7
 // log ( add_once(3,5) ); //undefined
 
-var index = fromTo(0, 3);
-log( index() );  //0
-log( index() );  //1
-log( index() );  //2
-log( index() );  //undefined
+// var index = fromTo(0, 3);
+// log( index() );  //0
+// log( index() );  //1
+// log( index() );  //2
+// log( index() );  //undefined
+
+var ele = element(['a', 'b', 'c', 'd'], fromTo(1,3));
+log( ele() );  //b
+log( ele() );  //c
+log( ele() );  //undefined
+
+var elf = element(['a', 'b', 'c', 'd']);
+log( elf() );  //a
+log( elf() );  //b
+log( elf() );  //c
+log( elf() );  //d
+log( elf() );  //undefined
