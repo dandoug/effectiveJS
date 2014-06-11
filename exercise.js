@@ -77,6 +77,13 @@ function composeu(fa, fb) {
 	};
 }
 
+// invoke two binary functions
+function composeb(f, g) {
+	return function(a, b, c) {
+		return g( f(a, b), c);
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -117,4 +124,7 @@ var square = twice(mul);
 // var bus = reverse(sub);
 // log( bus(3,2) );  // -1
 
-log( composeu(doubl, square)(5) ); // 100
+//log( composeu(doubl, square)(5) ); // 100
+
+log( composeb(add, mul)(2, 3, 7) ); // 35
+

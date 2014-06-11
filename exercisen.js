@@ -3,7 +3,7 @@
 
 // write out arg
 function log(arg) {
-	console(arg);
+	document.writeln(arg);
 }
 
 // identity function
@@ -70,6 +70,13 @@ function reverse(f) {
 	};
 }
 
+// compose two unary functions
+function composeu(fa, fb) {
+	return function(a) {
+		return fb(fa(a));
+	};
+}
+
 //log(identity(3));
 //log(add(3,4));
 //log(sub(3,4));
@@ -102,10 +109,12 @@ function reverse(f) {
 //log( inc_3(inc_3(5)) );   //7
 
 // log( add(11,11) );  	//22
-// var doubl = twice(add);
+var doubl = twice(add);
 // log( doubl(11) );   	//22
-// var square = twice(mul);
+var square = twice(mul);
 // log( square(11) ); 		//121
 
-var bus = reverse(sub);
-log( bus(3,2) );  // -1
+// var bus = reverse(sub);
+// log( bus(3,2) );  // -1
+
+log( composeu(doubl, square)(5) ); // 100
