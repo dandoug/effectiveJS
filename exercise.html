@@ -39,12 +39,20 @@ function addf(a) {
 	};
 }
 
+// function that takes a binary function and makes it callable with two invocation
 function liftf(f) {
 	return function(a) {
 		return function(b) {
 			return f(a,b);
-		}
-	}
+		};
+	};
+}
+
+// take a function an argument, return function that adds second argument
+function curry(f, a) {
+	return function(b) {
+		return f(a, b);
+	};
 }
 
 //log(identity(3));
@@ -57,9 +65,12 @@ function liftf(f) {
 
 //log( addf(3)(4) );
 
-var addf = liftf(add);
-log( addf(3)(4) );
-log( liftf(mul)(5)(6) );
+//var addf = liftf(add);
+//log( addf(3)(4) ); 			// 7
+//log( liftf(mul)(5)(6) ); 	// 30 
 
+var add3 = curry(add, 3);
+log( add3(4) ); 		//7
+log( curry(mul,5)(6) ); //30
 
 </script></pre></body></html>
