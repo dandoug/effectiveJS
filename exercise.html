@@ -1,0 +1,54 @@
+<html><body><pre><script>
+
+// write out arg
+function log(arg) {
+	document.writeln(arg);
+}
+
+// identity function
+function identity(x) {
+	return x;
+}
+
+// add two numbers
+function add(a, b) {
+	return +a + +b; 
+}
+
+// subtract two numbers
+function sub(a, b) {
+	return +a - +b;
+}
+
+// multiply two numbers
+function mul(a, b) {
+	return +a * +b;
+}
+
+// function that returns a function that returns its argument
+function identityf(func) {
+	return function() {
+		return func;
+	};
+}
+
+// funciton that adds from two invocations
+function addf(a) {
+	return function(b) {
+		return +a + +b;
+	};
+}
+
+
+//log(identity(3));
+//log(add(3,4));
+//log(sub(3,4));
+//log(mul(3,4));
+
+//var idf3 = identityf(3);
+//log(idf3());
+
+log( addf(3)(4) );
+
+
+</script></pre></body></html>
