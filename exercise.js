@@ -325,16 +325,15 @@ function exp(x) {
 //}
 
 // factory function to consume invocations through a binary function
-function gonk(func) {
-	var gonkfunc = function(x, y) {
+function liftg(func) {
+	var liftfunc = function(x, y) {
 		return (x === undefined) ? y : function(z) {
-			return gonkfunc(z, (y === undefined) ? x : func(x,y));
+			return liftfunc(z, (y === undefined) ? x : func(x,y));
 		};
 	};
-	return gonkfunc;
+	return liftfunc;
 }
-var addg = gonk(add);  // gonk add
-var liftg = gonk;
+var addg = liftg(add);  // gonk add
 
 // --- Test cases that exercise the above functions are below
 
