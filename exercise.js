@@ -326,14 +326,29 @@ function exp(x) {
 
 // factory function to consume invocations through a binary function
 function liftg(func) {
-	var liftfunc = function(x, y) {
+	return function liftfunc(x, y) {
 		return (x === undefined) ? y : function(z) {
 			return liftfunc(z, (y === undefined) ? x : func(x,y));
 		};
 	};
-	return liftfunc;
 }
 var addg = liftg(add);  // gonk add
+
+//build up array from invocations
+function arrayg(x, y) {
+	y = (y === undefined) ? [] : y;
+	return (x === undefined) ? y : function(z) {
+		y.push(x);
+		return arrayg(z, y);
+	};
+}
+
+function unaryc(func) {
+	return function(callback, arg) {
+		callback( func(arg) );
+	}
+}
+
 
 // --- Test cases that exercise the above functions are below
 
@@ -496,7 +511,14 @@ var square = twice(mul);
 //log( addg(1)(2)(4)(8)()  );  // 15
 
 
-log( liftg(mul)() );				// undefined
-log( liftg(mul)(3)()  );			// 3
-log( liftg(mul)(3)(4)(0)() ); 		// 0
-log( liftg(mul)(1)(2)(4)(8)() );	// 64
+//log( liftg(mul)() );				// undefined
+//log( liftg(mul)(3)()  );			// 3
+//log( liftg(mul)(3)(4)(0)() ); 		// 0
+//log( liftg(mul)(1)(2)(4)(8)() );	// 64
+
+//log( arrayg() ); 			// []
+//log( arrayg(3)() ); 		// [ 3 ]
+//log( arrayg(3)(4)(5)() ); 	// [ 3, 4, 5 ]
+
+sqrtc = unaryc(Math.sqrt);
+sqrtc(log, 81); //9
