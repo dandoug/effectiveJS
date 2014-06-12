@@ -281,18 +281,36 @@ function exp(x) {
 	return x;
 }
 
-// invoke add on succssive arguments until reaching a null invocation
-function addg(x) {
-	var acc = x;
-	var recurse = function(y) {
-		if (y === undefined) {
-			return acc;
-		} 
-		acc += y;
-		return recurse;
-	}
-	return (x === undefined) ? acc : recurse;
+//// invoke add on succssive arguments until reaching a null invocation
+//function addg(x) {
+//	var acc = x;
+//	var recurse = function(y) {
+//		if (y === undefined) {
+//			return acc;
+//		} 
+//		acc += y;
+//		return recurse;
+//	}
+//	return (x === undefined) ? acc : recurse;
+//}
+
+//invoke add on succssive arguments until reaching a null invocation
+//function addg(x, y) {
+//	return (x === undefined) ? y : function(z) {
+//		return addg(z, (y === undefined) ? x : x + y);
+//	};
+//}
+
+// factory function to consume invocations through a binary function
+function gonk(func) {
+	var gonkfunc = function(x, y) {
+		return (x === undefined) ? y : function(z) {
+			return gonkfunc(z, (y === undefined) ? x : func(x,y));
+		};
+	};
+	return gonkfunc;
 }
+var addg = gonk(add);  // gonk add
 
 
 //log(identity(3));
