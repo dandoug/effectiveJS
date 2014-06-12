@@ -1,7 +1,28 @@
 // Exercises from Effective JavaScript by Doug Crockford
 // from class taught June 10-12, 2014
+//
+//  The exercises are a sequence of problems that successively add more
+//  functions to this file.  You can see it step by step by looking at 
+//  the git commits (https://github.com/dandoug/effectiveJS).
+//
+//  The test cases that exercise the functions are at the bottom.  As I 
+//  did the exercises, I would comment out old test cases so the output
+//  would only be for the current exercise.
+//
+//  Speaking of exercises, you can find the notes I took from the class,
+//  as well as the slides for the exercises and the solutions presented
+//  in class here:  https://www.evernote.com/pub/dandoug/efectivejavascriptjune2014
+//
+//  This file can be run three ways:
+//  1) By pointing a web-browser at the index.html file in the same directory
+//  2) On the command-line,  node  exercise.js
+//  3) Within an IDE like Eclipse (with nodeclipse installed)
+
+
 
 // write out arg
+// Writen to write to a DOM if document is defined, otherwise
+// use console.log()
 function log(arg) {
 	if (typeof(document) != "undefined") {
 		document.writeln(arg);
@@ -9,6 +30,8 @@ function log(arg) {
 		console.log(arg);
 	}
 }
+
+// Exercises start here....
 
 // identity function
 function identity(x) {
@@ -312,6 +335,8 @@ function gonk(func) {
 }
 var addg = gonk(add);  // gonk add
 
+
+// --- Test cases that exercise the above functions are below
 
 //log(identity(3));
 //log(add(3,4));
