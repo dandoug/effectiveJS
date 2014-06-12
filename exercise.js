@@ -334,7 +334,7 @@ function gonk(func) {
 	return gonkfunc;
 }
 var addg = gonk(add);  // gonk add
-
+var liftg = gonk;
 
 // --- Test cases that exercise the above functions are below
 
@@ -490,9 +490,14 @@ var square = twice(mul);
 //];
 //log( exp(nae) ); // 5
 
-log( addg()  );              // undefined
-log( addg(2)()  );           // 2
-log( addg(2)(7)()  );        // 9
-log( addg(3)(4)(0)()  );     // 7
-log( addg(1)(2)(4)(8)()  );  // 15
+//log( addg()  );              // undefined
+//log( addg(2)()  );           // 2
+//log( addg(2)(7)()  );        // 9
+//log( addg(3)(4)(0)()  );     // 7
+//log( addg(1)(2)(4)(8)()  );  // 15
 
+
+log( liftg(mul)() );				// undefined
+log( liftg(mul)(3)()  );			// 3
+log( liftg(mul)(3)(4)(0)() ); 		// 0
+log( liftg(mul)(1)(2)(4)(8)() );	// 64
