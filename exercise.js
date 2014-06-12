@@ -281,6 +281,18 @@ function exp(x) {
 	return x;
 }
 
+// invoke add on succssive arguments until reaching a null invocation
+function addg(x) {
+	var acc = x;
+	var recurse = function(y) {
+		if (y === undefined) {
+			return acc;
+		} 
+		acc += y;
+		return recurse;
+	}
+	return (x === undefined) ? acc : recurse;
+}
 
 
 //log(identity(3));
@@ -429,8 +441,15 @@ var square = twice(mul);
 //log( exp(sae) ); // 9
 //log( exp(42) );  // 42
 
-var nae = [
-		Math.sqrt,
-		[add, [square,3], [square,4]]
-];
-log( exp(nae) ); // 5
+//var nae = [
+//		Math.sqrt,
+//		[add, [square,3], [square,4]]
+//];
+//log( exp(nae) ); // 5
+
+log( addg()  );              // undefined
+log( addg(2)()  );           // 2
+log( addg(2)(7)()  );        // 9
+log( addg(3)(4)(0)()  );     // 7
+log( addg(1)(2)(4)(8)()  );  // 15
+
